@@ -1,11 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { requestProductList } from "../../Redux/actions";
+import ProductsComponent from "../../Component/Products";
+import { requestProductList, requestToAddCart } from "../../Redux/actions";
+import { showSuccess } from "../../Utils/Toaster";
+import "./index.scss";
+
+const filters = [
+  {
+    name: "All Products",
+    tag: "all products",
+  },
+  {
+    name: "Tea Shirts",
+    tag: "T-shirt",
+  },
+  {
+    name: "Denim",
+    tag: "Denim",
+  },
+  {
+    name: "Sweatshirt",
+    tag: "Sweat-shirt",
+  },
+  {
+    name: "Polo Tee Shirt",
+    tag: "Polo Tee Shirt",
+  },
+  {
+    name: "Shirt",
+    tag: "shirt",
+  },
+];
+
 const Products = () => {
   //Initial state Data
-  const [state, setState] = useState({
-    productList: [],
+  const [cartProduct, setProductToCart] = useState([]);
+
+  //Filter State
+  const [filterBy, setFilterBy] = useState({
+    name: "All Products",
+    tag: "all products",
   });
 
   //Dispatching Actions
@@ -18,40 +52,94 @@ const Products = () => {
   useEffect(() => {
     try {
       dispatch(requestProductList());
+      setProductToCart(cartProduct);
     } catch (error) {
       console.log("Errrrrrrrrrrrr", error);
     }
   }, []);
 
+  //function for addind product to cart
+  const handleAddToCart = (details) => {
+    const { data, selectedSize } = details;
+    console.log(">>>>>>>>>>>>>>>>>selectedSize", selectedSize);
+    try {
+      let size = "";
+      if (selectedSize === 38) {
+        size = "XS";
+      } else if (selectedSize === 39) {
+        size = "S";
+      } else if (selectedSize === 30) {
+        size = "M";
+      } else if (selectedSize === 44) {
+        size = "L";
+      } else if (selectedSize === 46) {
+        size = "XL";
+      }
+
+      const productDetails = {
+        id: data.id,
+        image: data.image_src[0],
+        size,
+        price: data.price,
+        vendor: data.vendor,
+        tag: data.name,
+      };
+
+      const cartData = cartProduct;
+
+      const isAddedToCart = cartData.some(
+        (item) => parseInt(item.id) === parseInt(data.id)
+      );
+      if (!isAddedToCart) {
+        cartProduct.push(productDetails);
+        setProductToCart(cartProduct);
+        dispatch(requestToAddCart(cartProduct));
+        showSuccess("Added To cart suceessfully");
+      }
+    } catch (error) {
+      console.log(">>>>>>>>>>>>Error", error);
+    }
+  };
   return (
     <div className={"container"}>
+      <div className={"mb-4"}>
+        <h4>
+          <b>All Products:</b> (
+          {productReducer.data && productReducer.data.length
+            ? productReducer.data.length
+            : 0}{" "}
+          Products)
+        </h4>
+        <div className={"row m-0"}>
+          <h5 className={"mt-3"}>
+            <b>Filters:</b>
+          </h5>{" "}
+          {filters.map((data, index) => {
+            return (
+              <div
+                className={`${
+                  filterBy.name === data.name ? "filter-active" : "filter"
+                } mr-3 ml-2 cursor-pointer`}
+                key={index}
+                onClick={() => setFilterBy(data)}
+              >
+                {data.name}
+              </div>
+            );
+          })}
+        </div>
+      </div>
       <div className={"row"}>
-        {productReducer.data && productReducer.data.length
-          ? productReducer.data.map((data, index) => {
-              return (
-                <React.Fragment key={index}>
-                  <div className={"col-md-3"}>
-                    <Card className={"mb-2"}>
-                      <Card.Img
-                        variant="top"
-                        src={data.image_src[0]}
-                        height={"100%"}
-                      />
-                      <Card.Body>
-                        <Card.Title>{data.vendor}</Card.Title>
-                        <Card.Text>
-                          <small>{data.name.substring("...", 32)}</small>
-                        </Card.Text>
-                        <Card.Text>
-                          <b>{`$${data.price}`}</b>
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </div>
-                </React.Fragment>
-              );
-            })
-          : null}
+        <ProductsComponent
+          productList={
+            productReducer.data && productReducer.data.length
+              ? productReducer.data
+              : []
+          }
+          handleAddToCart={(data) => handleAddToCart(data)}
+          cartProduct={productReducer.cartProducts}
+          filterBy={filterBy}
+        />
       </div>
     </div>
   );

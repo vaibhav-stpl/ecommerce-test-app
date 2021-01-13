@@ -30,9 +30,12 @@
   align-items: center;
   padding: 0 20px;
   color: #878787;
-  @media screen and (min-width: 320px) and (max-width: 768px) {
+  @media screen and (min-width: 320px) and (max-width: 767px) {
     height: 42px;
     margin-bottom: 10px;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1024px) { 
+    padding: 0 15px
   }
 }
 .top-border {

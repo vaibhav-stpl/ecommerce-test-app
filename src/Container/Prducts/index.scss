@@ -1,20 +1,75 @@
+.counter-color {
+  font-weight: 300;
+  color: #878787;
+}
 .filter-active {
-  background: #f5f2f2;
-  padding: 10px 7px 0px 12px;
-  border-radius: 20px;
-  border-style: solid;
-  border-width: 1px;
-  font-size: 15px;
-  font-weight: 600;
-  box-shadow: 0px 2px 0 0 #00000059;
+  border-radius: 52px;
+  border: 1px solid #000;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 14px;
+  padding: 0 20px;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    height: 42px;
+    margin-bottom: 10px;
+  }
 }
 
 .filter {
   background: #ffff;
-  padding: 10px 7px 0px 12px;
-  border-radius: 20px;
-  border-style: solid;
-  border-width: 0.5px;
-  font-size: 15px;
+  border-radius: 52px;
+  border: 1px solid #C4C4C4;
+  font-size: 12px;
   font-weight: 200;
+  line-height: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  color: #878787;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    height: 42px;
+    margin-bottom: 10px;
+  }
+}
+.top-border {
+  border-top: 1px solid #E5E5E5;
+  padding-top: 25px;
+  max-width: calc(100% - 30px);
+  margin: 0 auto;
+}
+.product-section {
+  .card {
+    border: 0;
+    .card-img-top {
+      border-radius: 0 !important;
+    }
+    .card-body {
+      padding: 1rem;
+      .card-title {
+        margin-bottom: 8px;
+        font-size: 16px;
+        line-height: 19px;
+      }
+      .card-text {
+        color: #878787;
+        line-height: 16px;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+    }
+    .price-text {
+      font-size: 14px;
+      line-height: 16px;
+      color: #000;
+    }
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .mobile-filter-text {
+    margin: 6px 0!important;
+  }
 }

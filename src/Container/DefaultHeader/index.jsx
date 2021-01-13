@@ -1,8 +1,10 @@
 import React, { Fragment } from "react";
 import { Navbar, Button, OverlayTrigger, Popover, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import logo from "../../Assects/Images/bolt.png";
-import cakrtImg from "../../Assects/Images/shopping-cart.svg";
+import logo from "../../Assects/Images/logo.svg";
+import cakrtImg from "../../Assects/Images/cart.svg";
+import userImg from "../../Assects/Images/user.svg";
+import searchImg from "../../Assects/Images/search.svg";
 import "./index.scss";
 
 const DeafaultHeader = (props) => {
@@ -60,37 +62,43 @@ const DeafaultHeader = (props) => {
   );
   return (
     <Fragment>
-      <Navbar bg="light" variant="light" className={"justify-content-center"}>
+      <Navbar bg="light" variant="light" className={"justify-content-between custom-menu"}>
         <Navbar.Brand className={"logo"}>
           <img src={logo} alt={"img"} width={"100%"} height={"auto"} />
         </Navbar.Brand>
-        <div className="ml-5">
-          <div className={"d-flex"}>
-            <div className={"d-flex"}>
-              <Link className={"nav-link"} to={"/"}>
-                Shop
-              </Link>
-              <Link className={"nav-link"} to={"/"}>
-                About Us
-              </Link>
-              <Link className={"nav-link"} to={"/"}>
-                Our Store
-              </Link>
-              <Link className={"nav-link"} to={"/"}>
-                Contact us
-              </Link>
-            </div>
-            <div className={"cart-details"}>
-              <OverlayTrigger
-                trigger="click"
-                placement="bottom"
-                overlay={popoverBottom}
-              >
-                <img src={cakrtImg} alt={"img"} width={40} />
-              </OverlayTrigger>
-              <span className={"cart-item"}>{cartCount}</span>
-            </div>
-          </div>
+
+        <div className={"d-flex mobileHide"}>
+          <Link className={"nav-link"} to={"/"}>
+            Shop
+          </Link>
+          <Link className={"nav-link"} to={"/"}>
+            About Us
+          </Link>
+          <Link className={"nav-link"} to={"/"}>
+            Our Store
+          </Link>
+          <Link className={"nav-link"} to={"/"}>
+            Contact us
+          </Link>
+        </div>
+        <div className={"cart-details"}>
+          <Link className={"nav-link"} to={"/"}>
+            <img src={userImg} alt={"img"} width={40} />
+          </Link>
+          <Link className={"nav-link"} to={"/"}>
+            <img src={searchImg} alt={"img"} width={40} />
+          </Link>
+          <Link className={"nav-link"} to={"/"}>
+            <OverlayTrigger
+              trigger="click"
+              placement="bottom"
+              overlay={popoverBottom}
+            >
+              <img src={cakrtImg} alt={"img"} width={40} />
+            </OverlayTrigger>
+            <span className={"cart-item"}>{cartCount}</span>
+          </Link>
+          
         </div>
       </Navbar>
       <div className={"reffer-invite"}>

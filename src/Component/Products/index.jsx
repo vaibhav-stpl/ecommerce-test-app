@@ -79,8 +79,8 @@ const ProductsComponent = (props) => {
                               {!inCart ? "Add to Cart" : "Item In Cart"}
                             </Button>
                           ) : (
-                            <div className={"d-flex justify-content-between"}>
-                              <div>
+                            <div className={"d-flex justify-content-between align-items-center"}>
+                              <div className={"price-text"}>
                                 <b>{`$${data.price}`}</b>
                               </div>
                               <div>

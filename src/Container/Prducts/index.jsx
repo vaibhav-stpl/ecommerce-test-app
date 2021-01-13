@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Col } from 'react-bootstrap';
 import ProductsComponent from "../../Component/Products";
 import { requestProductList, requestToAddCart } from "../../Redux/actions";
 import { showSuccess } from "../../Utils/Toaster";
@@ -103,15 +104,17 @@ const Products = () => {
   return (
     <div className={"container"}>
       <div className={"mb-4"}>
-        <h4>
-          <b>All Products:</b> (
+        <h4 className={"mb-4"}>
+          <b>All Products:</b> 
+          <span class="counter-color">(
           {productReducer.data && productReducer.data.length
             ? productReducer.data.length
             : 0}{" "}
           Products)
+          </span>
         </h4>
         <div className={"row m-0"}>
-          <h5 className={"mt-3"}>
+          <h5 className={"mt-3 mobile-filter-text"}>
             <b>Filters:</b>
           </h5>{" "}
           {filters.map((data, index) => {
@@ -119,7 +122,7 @@ const Products = () => {
               <div
                 className={`${
                   filterBy.name === data.name ? "filter-active" : "filter"
-                } mr-3 ml-2 cursor-pointer`}
+                } mr-2 ml-2 cursor-pointer`}
                 key={index}
                 onClick={() => setFilterBy(data)}
               >
@@ -129,7 +132,8 @@ const Products = () => {
           })}
         </div>
       </div>
-      <div className={"row"}>
+      <div className={"row product-section"}>
+        <Col sm={12} className={"top-border"} ></Col>
         <ProductsComponent
           productList={
             productReducer.data && productReducer.data.length

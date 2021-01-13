@@ -1,14 +1,13 @@
 import React, { Fragment, Suspense } from "react";
 import Loader from "../../Component/Common/spinner";
 import DeafaultHeader from "../DefaultHeader";
-import Routes from "../../routes";
+import Routes from "../../routesPath";
 import { Route, Switch } from "react-router-dom";
 import "./index.scss";
 import { useSelector } from "react-redux";
 const DefaultLayout = (props) => {
   //Get data from reducer state
   const productReducer = useSelector((state) => state.productReducer);
-
   return (
     <Fragment>
       <DeafaultHeader

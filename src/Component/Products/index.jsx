@@ -86,7 +86,7 @@ const ProductsComponent = (props) => {
                               className={"add-cart-btn"}
                               disabled={inCart}
                             >
-                              {!inCart ? "Add to Cart" : "Item In Cart"}
+                              {!inCart ? "Add to Cart" : "Item Added In Cart"}
                             </Button>
                           ) : (
                             <div

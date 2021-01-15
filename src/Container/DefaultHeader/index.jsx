@@ -1,13 +1,12 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useRef, useState } from "react";
 import {
   Navbar,
   Button,
-  Card,
   Popover,
   Col,
   Row,
-  OverlayTrigger,
   Badge,
+  Overlay,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../Assects/Images/logo.svg";
@@ -20,8 +19,15 @@ import CheckoutModal from "../../Component/Products/checkoutModal";
 const DeafaultHeader = (props) => {
   const { cartCount, productList, handleRemoveItem } = props;
   const [openCheckout, setOpenCheckout] = useState(false);
-
+  const [openCardBox, setOpenCardBox] = useState(false);
+  const [target, setTarget] = useState(null);
+  const ref = useRef(null);
   let totalPrice = 0;
+
+  const handleClick = (event) => {
+    setOpenCardBox(!openCardBox);
+    setTarget(event.target);
+  };
 
   const popoverBottom = (
     <Popover id="popover-positioned-bottom">
@@ -99,7 +105,11 @@ const DeafaultHeader = (props) => {
         </div>
       </div>
       <Col md={"12 p-2 justify-content-center text-center mb-2"}>
-        <Link to={"/checkout"} className={"checkout-btn"}>
+        <Link
+          onClick={() => setOpenCardBox(false)}
+          to={"/checkout"}
+          className={"checkout-btn"}
+        >
           {" "}
           Checkout
         </Link>
@@ -138,16 +148,22 @@ const DeafaultHeader = (props) => {
           <Link className={"nav-link"} to={"/"}>
             <img src={searchImg} alt={"img"} width={40} />
           </Link>
-          <Link className={"nav-link"} to={"/"}>
-            <OverlayTrigger
-              trigger="click"
-              placement="bottom"
-              overlay={popoverBottom}
-            >
-              <img src={cakrtImg} alt={"img"} width={40} />
-            </OverlayTrigger>
+          <div className={"nav-link"}>
+            <div ref={ref}>
+              <img
+                src={cakrtImg}
+                alt={"img"}
+                width={40}
+                onClick={handleClick}
+              />
+              {productList && productList.length ? (
+                <Overlay show={openCardBox} target={target} placement="bottom">
+                  {popoverBottom}
+                </Overlay>
+              ) : null}
+            </div>
             <span className={"cart-item"}>{cartCount}</span>
-          </Link>
+          </div>
         </div>
       </Navbar>
       <div className={"reffer-invite"}>

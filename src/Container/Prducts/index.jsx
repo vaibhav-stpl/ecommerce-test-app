@@ -5,6 +5,7 @@ import ProductsComponent from "../../Component/Products";
 import { requestProductList, requestToAddCart } from "../../Redux/actions";
 import { showSuccess } from "../../Utils/Toaster";
 import "./index.scss";
+import Loader from "../../Component/Common/spinner";
 
 const filters = [
   {
@@ -37,6 +38,8 @@ const Products = () => {
   //Initial state Data
   const [cartProduct, setProductToCart] = useState([]);
 
+  const [numberProduct, setNumberProduct] = useState("");
+
   //Filter State
   const [filterBy, setFilterBy] = useState({
     name: "All Products",
@@ -61,10 +64,31 @@ const Products = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (productReducer.data && productReducer.data.length) {
+      if (filterBy.tag !== "all products") {
+        const filterData = productReducer.data.filter(
+          (item) => item.tag === filterBy.tag
+        );
+        setNumberProduct(filterData.length);
+      } else {
+        setNumberProduct(productReducer.data.length);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterBy]);
+
+  //Use Effect for initial page render
+  useEffect(() => {
+    if (productReducer.data && productReducer.data.length) {
+      setNumberProduct(productReducer.data.length);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productReducer]);
+
   //function for addind product to cart
   const handleAddToCart = (details) => {
     const { data, selectedSize } = details;
-    console.log(">>>>>>>>>>>>>>>>>selectedSize", selectedSize);
     try {
       let size = "";
       if (selectedSize === 38) {
@@ -113,13 +137,7 @@ const Products = () => {
       <div className={"mb-4"}>
         <h4 className={"mb-4"}>
           <b>All Products:</b>
-          <span class="counter-color">
-            (
-            {productReducer.data && productReducer.data.length
-              ? productReducer.data.length
-              : 0}{" "}
-            Products)
-          </span>
+          <span className="counter-color">({numberProduct} Products)</span>
         </h4>
         <div className={"row m-0"}>
           <h5 className={"mt-3 mobile-filter-text"}>
@@ -140,19 +158,25 @@ const Products = () => {
           })}
         </div>
       </div>
-      <div className={"row product-section"}>
-        <Col sm={12} className={"top-border"}></Col>
-        <ProductsComponent
-          productList={
-            productReducer.data && productReducer.data.length
-              ? productReducer.data
-              : []
-          }
-          handleAddToCart={(data) => handleAddToCart(data)}
-          cartProduct={productReducer.cartProducts}
-          filterBy={filterBy}
-        />
-      </div>
+      {!productReducer.isLoadingProduct ? (
+        <div className={"row product-section"}>
+          <Col sm={12} className={"top-border"}></Col>
+          <ProductsComponent
+            productList={
+              productReducer.data && productReducer.data.length
+                ? productReducer.data
+                : []
+            }
+            handleAddToCart={(data) => handleAddToCart(data)}
+            cartProduct={productReducer.cartProducts}
+            filterBy={filterBy}
+            isNoProductData={numberProduct !== 0 ? false : true}
+            isLoadingProduct={productReducer.isLoadingProduct}
+          />
+        </div>
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };

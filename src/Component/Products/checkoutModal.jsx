@@ -18,39 +18,39 @@ const CheckoutModal = (props) => {
       </Modal.Header>
       <Modal.Body>
         {" "}
-        <div class="panel-body">
+        <div className="panel-body">
           <Form>
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="form-group">
+            <div className="row">
+              <div className="col-xs-12">
+                <div className="form-group">
                   <label for="cardNumber">CARD NUMBER</label>
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
                       type="tel"
-                      class="form-control"
+                      className="form-control"
                       name="cardNumber"
                       placeholder="Valid Card Number"
                       autocomplete="cc-number"
                       required
                       autofocus
                     />
-                    <span class="input-group-addon">
-                      <i class="fa fa-credit-card"></i>
+                    <span className="input-group-addon">
+                      <i className="fa fa-credit-card"></i>
                     </span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-xs-7 col-md-7">
-                <div class="form-group">
+            <div className="row">
+              <div className="col-xs-7 col-md-7">
+                <div className="form-group">
                   <label for="cardExpiry">
-                    <span class="hidden-xs">EXPIRATION</span>
-                    <span class="visible-xs-inline">EXP</span> DATE
+                    <span className="hidden-xs">EXPIRATION</span>
+                    <span className="visible-xs-inline">EXP</span> DATE
                   </label>
                   <input
                     type="tel"
-                    class="form-control"
+                    className="form-control"
                     name="cardExpiry"
                     placeholder="MM / YY"
                     autocomplete="cc-exp"
@@ -58,12 +58,12 @@ const CheckoutModal = (props) => {
                   />
                 </div>
               </div>
-              <div class="col-xs-5 col-md-5 pull-right">
-                <div class="form-group">
+              <div className="col-xs-5 col-md-5 pull-right">
+                <div className="form-group">
                   <label for="cardCVC">CV CODE</label>
                   <input
                     type="tel"
-                    class="form-control"
+                    className="form-control"
                     name="cardCVC"
                     placeholder="CVC"
                     autocomplete="cc-csc"
@@ -72,9 +72,9 @@ const CheckoutModal = (props) => {
                 </div>
               </div>
             </div>
-            <div class="row" style={{ display: "none" }}>
-              <div class="col-xs-12">
-                <p class="payment-errors"></p>
+            <div className="row" style={{ display: "none" }}>
+              <div className="col-xs-12">
+                <p className="payment-errors"></p>
               </div>
             </div>
           </Form>

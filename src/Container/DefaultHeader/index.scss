@@ -5,6 +5,9 @@
     font-size: 14px;
     line-height: 16px;
   }
+  .nav-link:hover {
+    color: #de4a19;
+  }
   @media screen and (min-width: 320px) and (max-width: 768px) {
     height: auto;
     .mobileHide {
@@ -118,7 +121,7 @@
     border-color: #000;
     color: #000;
   }
-  .btn:hover{
+  .btn:hover {
     width: 50%;
     background: rgb(221, 113, 113);
     border-color: #fff;
@@ -136,7 +139,7 @@
   padding: 8px 70px 8px 70px;
 }
 
-.checkout-btn:hover{
+.checkout-btn:hover {
   width: 100%;
   background: #bb5d35d8;
   border-color: #000;

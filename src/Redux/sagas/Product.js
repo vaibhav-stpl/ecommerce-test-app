@@ -22,7 +22,6 @@ const getProductListData = async () => {
 function* requestProductList() {
   try {
     const result = yield call(getProductListData);
-    console.log(">>>>>>>>>>>>>>>>>>>Result", result.data);
     if (result.data) {
       yield put(productListSuccess(result.data));
     }

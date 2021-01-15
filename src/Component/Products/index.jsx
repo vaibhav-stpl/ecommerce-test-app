@@ -6,20 +6,25 @@ const size = [38, 39, 40, 44, 46];
 
 const ProductsComponent = (props) => {
   //props from parent component
-  const { productList, handleAddToCart, cartProduct, filterBy } = props;
+  const {
+    productList,
+    handleAddToCart,
+    cartProduct,
+    filterBy,
+    isNoProductData,
+  } = props;
 
   //state For handleing size
   const [selectSize, setSelectSize] = useState({ size: false, index: -1 });
 
   //State for storing product size
   const [sizeData, setSizeData] = useState("");
-
   return (
     <Fragment>
-      {productList && productList.length
-        ? productList.map((data, index) => {
+      {!isNoProductData ? (
+        productList && productList.length ? (
+          productList.map((data, index) => {
             const tempData = cartProduct;
-            console.log(">>>>>>>>>>>>>>sizeData", sizeData);
             const inCart =
               tempData && tempData.length
                 ? tempData.some(
@@ -196,7 +201,16 @@ const ProductsComponent = (props) => {
               </React.Fragment>
             );
           })
-        : null}
+        ) : null
+      ) : (
+        <div className={"container"}>
+          <div className="jumbotron text-center">
+            <h4 className="display-5">
+              Sorry ! No results found for <b>{filterBy.tag}</b>
+            </h4>
+          </div>
+        </div>
+      )}
     </Fragment>
   );
 };

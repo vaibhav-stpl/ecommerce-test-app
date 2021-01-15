@@ -1,72 +1,122 @@
-import React, { Fragment } from "react";
-import { Navbar, Button, OverlayTrigger, Popover, Card } from "react-bootstrap";
+import React, { Fragment, useState } from "react";
+import {
+  Navbar,
+  Button,
+  Card,
+  Popover,
+  Col,
+  Row,
+  OverlayTrigger,
+  Badge,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../Assects/Images/logo.svg";
 import cakrtImg from "../../Assects/Images/cart.svg";
 import userImg from "../../Assects/Images/user.svg";
 import searchImg from "../../Assects/Images/search.svg";
 import "./index.scss";
+import CheckoutModal from "../../Component/Products/checkoutModal";
 
 const DeafaultHeader = (props) => {
   const { cartCount, productList, handleRemoveItem } = props;
+  const [openCheckout, setOpenCheckout] = useState(false);
+
+  let totalPrice = 0;
 
   const popoverBottom = (
-    <Popover id="popover-positioned-bottom" title="Popover bottom">
-      <Card>
-        {productList && productList.length
-          ? productList.map((data, index) => {
-              return (
-                <Card className={"internal-pad"} key={index}>
-                  <Card.Img
-                    variant="top"
+    <Popover id="popover-positioned-bottom">
+      {productList && productList.length
+        ? productList.map((data, index) => {
+            totalPrice += parseFloat(data.price);
+            return (
+              <Row className={"p-1 m-0 cart-box"} key={index}>
+                <Col md={4} className={"pl-0"}>
+                  <img
+                    className={"product-img"}
                     src={data.image}
-                    height={150}
-                    width={50}
+                    width={"100%"}
+                    alt={"img"}
                   />
-                  <Card.Body>
-                    <Card.Title>{data.vendor}</Card.Title>
-                    <Card.Text>
-                      <b>{data.tag}</b>
-                    </Card.Text>
-                    <Card.Text>
-                      <b>Price: ${data.price}</b>
-                    </Card.Text>
-                    <div className={"d-flex justify-content-between"}>
-                      <div>
-                        <Button
-                          className={"btn-trans btn-trans-primary"}
-                          size={"sm"}
-                          variant="primary"
-                        >
-                          Checkout
-                        </Button>
-                      </div>
-                      <div>
-                        <Button
-                          className={"btn-trans btn-trans-danger"}
-                          size={"sm"}
-                          variant="primary"
-                          onClick={() => handleRemoveItem(data.id)}
-                        >
-                          Remove Item
-                        </Button>
+                </Col>
+                <Col md={8} className={"p-0"}>
+                  <div className={"d-flex justify-content-between"}>
+                    <div>
+                      <b>{data.vendor}</b>
+                      <br />
+                      <span>
+                        <small>{data.tag}</small>
+                      </span>
+                      <br />
+                      <br />
+                      <div className={"d-flex justify-content-between"}>
+                        <div>
+                          <Badge variant="secondary">Size: {data.size}</Badge>
+                        </div>
+                        <div>
+                          <Badge variant="secondary">QTY: 1</Badge>
+                        </div>
                       </div>
                     </div>
-                  </Card.Body>
-                </Card>
-              );
-            })
-          : null}
-      </Card>
+                    <div className={"mr-1 text-right pl-2"}>
+                      <span>
+                        <b>Price ${data.price}</b>
+                      </span>
+                    </div>
+                  </div>
+                </Col>
+                <Col md={"12 p-2"}>
+                  <Button
+                    onClick={() => handleRemoveItem(data.id, data.size)}
+                    size={"sm"}
+                    className={"remove-btn"}
+                  >
+                    {" "}
+                    Remove Item
+                  </Button>
+                </Col>
+              </Row>
+            );
+          })
+        : null}
+      <div className={"d-flex justify-content-between p-1 cart-box"}>
+        <div>
+          <div>Total Item:</div>
+          <div>Sub Total:</div>
+          <div>Discount:</div>
+          <div>Total Amount:</div>
+        </div>
+        <div className={"text-right"}>
+          <div>
+            <b>{productList.length}</b>
+          </div>
+          <div>
+            <b>${totalPrice.toFixed(2)}</b>
+          </div>
+          <div>10%</div>
+          <div>
+            <b>${(totalPrice - totalPrice * 0.1).toFixed(2)}</b>
+          </div>
+        </div>
+      </div>
+      <Col md={"12 p-2 justify-content-center text-center mb-2"}>
+        <Link to={"/checkout"} className={"checkout-btn"}>
+          {" "}
+          Checkout
+        </Link>
+      </Col>
     </Popover>
   );
   return (
     <Fragment>
-      <Navbar bg="light" variant="light" className={"justify-content-between custom-menu"}>
+      <Navbar
+        bg="light"
+        variant="light"
+        className={"justify-content-between custom-menu"}
+      >
         <Navbar.Brand className={"logo"}>
           <img src={logo} alt={"img"} width={"100%"} height={"auto"} />
         </Navbar.Brand>
-
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <div className={"d-flex mobileHide"}>
           <Link className={"nav-link"} to={"/"}>
             Shop
@@ -98,7 +148,6 @@ const DeafaultHeader = (props) => {
             </OverlayTrigger>
             <span className={"cart-item"}>{cartCount}</span>
           </Link>
-          
         </div>
       </Navbar>
       <div className={"reffer-invite"}>
@@ -112,6 +161,10 @@ const DeafaultHeader = (props) => {
           </Button>
         </div>
       </div>
+      <CheckoutModal
+        openCheckout={openCheckout}
+        handleCloseModal={() => setOpenCheckout(!openCheckout)}
+      />
     </Fragment>
   );
 };

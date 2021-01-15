@@ -19,9 +19,14 @@ const ProductsComponent = (props) => {
       {productList && productList.length
         ? productList.map((data, index) => {
             const tempData = cartProduct;
+            console.log(">>>>>>>>>>>>>>sizeData", sizeData);
             const inCart =
               tempData && tempData.length
-                ? tempData.some((item) => parseInt(item.id) === data.id)
+                ? tempData.some(
+                    (item) =>
+                      parseInt(item.id) === data.id &&
+                      parseInt(item.selectedSize) === sizeData
+                  )
                 : false;
             return (
               <React.Fragment key={index}>
@@ -64,7 +69,7 @@ const ProductsComponent = (props) => {
                             </Card.Text>
                           </Fragment>
                         )}
-                        <Card.Text>
+                        <Fragment>
                           {sizeData && selectSize.index === index ? (
                             <Button
                               onClick={() =>
@@ -79,7 +84,11 @@ const ProductsComponent = (props) => {
                               {!inCart ? "Add to Cart" : "Item In Cart"}
                             </Button>
                           ) : (
-                            <div className={"d-flex justify-content-between align-items-center"}>
+                            <div
+                              className={
+                                "d-flex justify-content-between align-items-center"
+                              }
+                            >
                               <div className={"price-text"}>
                                 <b>{`$${data.price}`}</b>
                               </div>
@@ -100,7 +109,7 @@ const ProductsComponent = (props) => {
                               </div>
                             </div>
                           )}
-                        </Card.Text>
+                        </Fragment>
                       </Card.Body>
                     </Card>
                   </div>

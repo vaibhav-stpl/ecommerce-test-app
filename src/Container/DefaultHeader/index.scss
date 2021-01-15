@@ -22,7 +22,7 @@
   align-items: center;
   .invite-friend {
     text-align: center;
-    font-family: 'Roboto' sans-serif;
+    font-family: "Roboto" sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -69,7 +69,7 @@
   }
   .cart-item {
     font-size: 12px;
-    background: #E64C09;
+    background: #e64c09;
     color: #ffff;
     border-radius: 50%;
     border-color: white;
@@ -93,19 +93,55 @@
   box-shadow: -2px 3px 0px 0px #0000004f;
 }
 
-.btn-trans-danger:hover{
+.btn-trans-danger:hover {
   background: rgb(236, 104, 104);
   border-color: #000;
   color: #fff;
   box-shadow: -2px 3px 0px 0px #0000004f;
 }
 
-.btn-trans-primary:hover{
+.btn-trans-primary:hover {
   background: rgb(231, 126, 40);
   border-color: #000;
   color: #fff;
   box-shadow: -2px 3px 0px 0px #0000004f;
 }
 @media only screen and (max-width: 600px) {
-  
+}
+
+.cart-box {
+  border: solid 0.5px #2b2b2b5e;
+  margin: 8px 6px !important;
+  .btn {
+    width: 50%;
+    background: transparent;
+    border-color: #000;
+    color: #000;
+  }
+  .btn:hover{
+    width: 50%;
+    background: rgb(221, 113, 113);
+    border-color: #fff;
+    color: #fff;
+  }
+}
+
+.checkout-btn {
+  width: 100%;
+  background: transparent;
+  border-color: #000;
+  border: solid 0.25px #000;
+  color: #000;
+  text-decoration: none;
+  padding: 8px 70px 8px 70px;
+}
+
+.checkout-btn:hover{
+  width: 100%;
+  background: #bb5d35d8;
+  border-color: #000;
+  border: solid 0.25px #000;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 70px 8px 70px;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Col } from 'react-bootstrap';
+import { Col } from "react-bootstrap";
 import ProductsComponent from "../../Component/Products";
 import { requestProductList, requestToAddCart } from "../../Redux/actions";
 import { showSuccess } from "../../Utils/Toaster";
@@ -57,6 +57,8 @@ const Products = () => {
     } catch (error) {
       console.log("Errrrrrrrrrrrr", error);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //function for addind product to cart
@@ -73,8 +75,10 @@ const Products = () => {
         size = "M";
       } else if (selectedSize === 44) {
         size = "L";
-      } else if (selectedSize === 46) {
+      } else if (selectedSize === 40) {
         size = "XL";
+      } else if (selectedSize === 46) {
+        size = "XXL";
       }
 
       const productDetails = {
@@ -84,12 +88,15 @@ const Products = () => {
         price: data.price,
         vendor: data.vendor,
         tag: data.name,
+        selectedSize,
       };
 
       const cartData = cartProduct;
 
       const isAddedToCart = cartData.some(
-        (item) => parseInt(item.id) === parseInt(data.id)
+        (item) =>
+          parseInt(item.id) === parseInt(data.id) &&
+          parseInt(item.selectedSize) === parseInt(selectedSize)
       );
       if (!isAddedToCart) {
         cartProduct.push(productDetails);
@@ -105,12 +112,13 @@ const Products = () => {
     <div className={"container"}>
       <div className={"mb-4"}>
         <h4 className={"mb-4"}>
-          <b>All Products:</b> 
-          <span class="counter-color">(
-          {productReducer.data && productReducer.data.length
-            ? productReducer.data.length
-            : 0}{" "}
-          Products)
+          <b>All Products:</b>
+          <span class="counter-color">
+            (
+            {productReducer.data && productReducer.data.length
+              ? productReducer.data.length
+              : 0}{" "}
+            Products)
           </span>
         </h4>
         <div className={"row m-0"}>
@@ -133,7 +141,7 @@ const Products = () => {
         </div>
       </div>
       <div className={"row product-section"}>
-        <Col sm={12} className={"top-border"} ></Col>
+        <Col sm={12} className={"top-border"}></Col>
         <ProductsComponent
           productList={
             productReducer.data && productReducer.data.length

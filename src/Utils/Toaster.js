@@ -19,3 +19,19 @@ export const showError = (message) => {
     timer: 1000,
   });
 };
+
+export const showConfirmation = (message) => {
+  Swal.fire({
+    title: message,
+    showDenyButton: false,
+    showCancelButton: true,
+    confirmButtonText: `Remove`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      showSuccess("Removed Successfully!!")
+    } else if (result.isDenied) {
+      Swal.fire("Changes are not saved", "", "info");
+    }
+  });
+};
